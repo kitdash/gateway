@@ -39,7 +39,12 @@ export class ForwardController {
 
     const targetUrl = this.getServiceUrl(path);
     if (!targetUrl) {
-      throw new Error(`Service not found for path: ${path}`);
+      return Promise.resolve({
+        data: {
+          statusCode: 404,
+          message: `Service not available. Configure ${path.split('/')[1]} service URL in environment variables.`,
+        },
+      });
     }
 
     const headersToForward = { ...headers };
