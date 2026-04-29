@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bodyParser: true });
 
   const configService = app.get(ConfigService);
 
@@ -13,6 +13,9 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
-  await app.listen(configService.get<number>('port') || 3000);
+  const port = process.env.PORT || configService.get<number>('port') || 3000;
+  await app.listen(port);
+  
+  console.log(`Gateway running on port ${port}`);
 }
 bootstrap();
