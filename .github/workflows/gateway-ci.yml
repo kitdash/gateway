@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'services/gateway/**'
+  pull_request:
+    paths:
+      - 'services/gateway/**'
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  gateway:
+    name: Gateway
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: services/gateway/package-lock.json
+
+      - name: Install dependencies
+        working-directory: services/gateway
+        run: npm ci
+
+      - name: Lint
+        working-directory: services/gateway
+        run: npm run lint
+
+      - name: Build
+        working-directory: services/gateway
+        run: npm run build
+
+      - name: Test
+        working-directory: services/gateway
+        run: npm test
