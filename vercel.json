@@ -1,6 +1,9 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "PORT=3000 npm run build",
   "installCommand": "npm install",
-  "framework": null,
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "framework": "nestjs",
+  "env": {
+    "PORT": "3000"
+  }
 }
