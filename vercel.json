@@ -2,21 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
-      "use": "@vercel/node",
-      "config": {
-        "distDir": "dist"
-      }
+      "src": "vercel.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/dist/main.js"
+      "dest": "vercel.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/dist/main.js"
+      "dest": "vercel.js"
     }
   ],
   "buildCommand": "npm run build",
